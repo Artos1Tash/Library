@@ -4,5 +4,4 @@ idea/workspace.xml
 __pycache__
 media
 db.sqlite3
-main.py
 .env

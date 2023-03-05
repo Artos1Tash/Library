@@ -10,12 +10,11 @@ class Genre(models.Model):
         return self.name
 
 class Language(models.Model):
-    """Model representing a Language (e.g. English, French, Japanese, etc.)"""
+    """Model representing a language"""
     name = models.CharField(max_length=200,
                             help_text="Enter the book's natural language (e.g. English, French, Japanese etc.)")
 
     def __str__(self):
-        """String for representing the Model object (in Admin site etc.)"""
         return self.name
 
 class Book(models.Model):
@@ -31,11 +30,13 @@ class Book(models.Model):
 
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.id)])
+    
+    def display_genre(self):
+        return ', '.join([ genre.name for genre in self.genre.all()[:3] ])
+    display_genre.short_description = 'Genre'
+
 
 class BookInstance(models.Model):
-    """
-    Model representing a specific copy of a book (i.e. that can be borrowed from the library).
-    """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular book across whole library")
     book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
     imprint = models.CharField(max_length=200)
@@ -55,30 +56,18 @@ class BookInstance(models.Model):
 
 
     def __str__(self):
-        """
-        String for representing the Model object
-        """
-        return '%s (%s)' % (self.id,self.book.title)
+        return '%s (%s)' % (self.id, self.due_back)
 
     
 class Author(models.Model):
-    """
-    Model representing an author.
-    """
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField('Died', null=True, blank=True)
 
     def get_absolute_url(self):
-        """
-        Returns the url to access a particular author instance.
-        """
         return reverse('author-detail', args=[str(self.id)])
 
 
     def __str__(self):
-        """
-        String for representing the Model object.
-        """
         return '%s, %s' % (self.last_name, self.first_name)
