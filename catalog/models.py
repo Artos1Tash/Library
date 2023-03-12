@@ -9,6 +9,7 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+
 class Language(models.Model):
     """Model representing a language"""
     name = models.CharField(max_length=200,
@@ -16,6 +17,7 @@ class Language(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Book(models.Model):
     title = models.CharField(max_length=200)
@@ -26,7 +28,6 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
-
 
     def get_absolute_url(self):
         return reverse('book-detail', args=[str(self.id)])
@@ -54,7 +55,6 @@ class BookInstance(models.Model):
     class Meta:
         ordering = ["due_back"]
 
-
     def __str__(self):
         return '%s (%s)' % (self.id, self.due_back)
 
@@ -67,7 +67,6 @@ class Author(models.Model):
 
     def get_absolute_url(self):
         return reverse('author-detail', args=[str(self.id)])
-
 
     def __str__(self):
         return '%s, %s' % (self.last_name, self.first_name)

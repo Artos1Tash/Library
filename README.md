@@ -1,4 +1,6 @@
-Started 10.11.22
+<img style="height: auto; width: auto;" src="mdn.png" alt="Hello">
+I started this tutorial 26.02.23
+
 
 Deploy locally
    1) `python3 -m venv venv`
