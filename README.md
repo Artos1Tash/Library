@@ -1,5 +1,9 @@
 <img style="height: auto; width: auto;" src="mdn.png" alt="Hello">
-I started this tutorial 26.02.23
+<h1>Django Web Framework (Python)</h1>
+
+-----
+
+I continued working on this tutorial 26.02.23
 
 
 Deploy locally
