@@ -1,5 +1,5 @@
-from django.http import Http404
-from django.shortcuts import render
+from django.http.response import Http404
+from django.shortcuts import render, get_object_or_404
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 
@@ -21,9 +21,9 @@ def index(request):
 
 
 class BookListView(generic.ListView):
-    context_object_name = 'boot_list'
-    queryset = Book.objects.filter(title__icontains='war')[:5]
-    template_name = 'books/my_arbitrary_template_name_list.html'
+    context_object_name = 'book_list'
+    queryset = Book.objects.all()
+    template_name = 'book_list.html'
 
 
 class BookDetailView(generic.DetailView):
@@ -34,8 +34,6 @@ class BookDetailView(generic.DetailView):
             book_id = Book.objects.get(pk=pk)
         except Book.DoesNotExist:
             raise Http404("Book does not exist")
-
-        # book_id=get_object_or_404(Book, pk=pk)
 
         return render(
             request,
