@@ -1,7 +1,7 @@
 from django.http.response import Http404
 from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
-from django.views import generic
+from django.views.generic import DetailView, ListView
 
 
 def index(request):
@@ -20,14 +20,15 @@ def index(request):
     )
 
 
-class BookListView(generic.ListView):
+class BookListView(ListView):
     context_object_name = 'book_list'
     queryset = Book.objects.all()
     template_name = 'book_list.html'
     paginate_by = 10
 
 
-class BookDetailView(generic.DetailView):
+# noinspection PyMethodParameters
+class BookDetailView(DetailView):
     model = Book
     template_name = 'book_detail.html'
 
@@ -42,3 +43,29 @@ class BookDetailView(generic.DetailView):
             'book_detail.html',
             context={'book': book_id, }
         )
+
+
+class AuthorListView(ListView):
+    context_object_name = 'author_list'
+    queryset = Author.objects.all()
+    template_name = 'author_list.html'
+    paginate_by = 10
+
+
+class AuthorDetailView(DetailView):
+    model = Author
+    template_name = 'author_detail.html'
+
+    def author_detail_view(request, pk):
+        try:
+            author_id = Author.objects.get(pk=pk)
+        except Author.DoesNotExist:
+            raise Http404('Author does not exist')
+
+        return render(
+            request,
+            'author_detail.html',
+            context={'author': author_id}
+        )
+
+
