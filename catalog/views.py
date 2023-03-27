@@ -1,5 +1,5 @@
 from django.http.response import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
 from django.views import generic
 
@@ -24,10 +24,12 @@ class BookListView(generic.ListView):
     context_object_name = 'book_list'
     queryset = Book.objects.all()
     template_name = 'book_list.html'
+    paginate_by = 10
 
 
 class BookDetailView(generic.DetailView):
     model = Book
+    template_name = 'book_detail.html'
 
     def book_detail_view(request, pk):
         try:
@@ -37,6 +39,6 @@ class BookDetailView(generic.DetailView):
 
         return render(
             request,
-            'catalog/book_detail.html',
+            'book_detail.html',
             context={'book': book_id, }
         )
