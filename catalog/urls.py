@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import BookListView, index, BookDetailView, AuthorListView, AuthorDetailView, LoanedBooksByUserListView
+from .views import BookListView, index, BookDetailView, AuthorListView, AuthorDetailView
 from django.urls import re_path
 
 
@@ -16,7 +16,4 @@ urlpatterns = [
     re_path(r'^author/(?P<pk>\d+)', AuthorDetailView.as_view(), name='author-detail'),
 
 
-]
-urlpatterns += [
-    re_path(r'^mybooks/$', LoanedBooksByUserListView.as_view(), name='my-borrowed'),
 ]
